@@ -1,9 +1,11 @@
+import java.lang.Math;
 
 public class PrimePalindrome {
 	
-	public boolean isPrime(int n){
+	public boolean isPrime (int n){
 		int k = 2;
-		while (k < (n/2)+1){
+		int limit = (int) Math.round(Math.sqrt(n));
+		while (k <= limit){
 			if (n%k == 0)
 				return false;
 			k++;
@@ -11,7 +13,10 @@ public class PrimePalindrome {
 		return true;
 	}
 
-	public boolean isPalindrome(int m) {
+	public boolean isPalindrome (int m) {
+		if (m<10){
+			return true;
+		}
 		String temp = Integer.toString(m);
 		for (int j = 0; j < temp.length()/2; j++){
 			if (temp.charAt(j)!= temp.charAt(temp.length()-1-j))
@@ -19,15 +24,24 @@ public class PrimePalindrome {
 		}
 		return true;
 	}
-
-	public static void main(String[] args){
-		PrimePalindrome game = new PrimePalindrome();
-		for (int i = Integer.parseInt(args[0]); i > 9; i--){
-			if (game.isPalindrome(i)){
-				if (game.isPrime(i)){
-					System.out.println(i);
+	
+	public int getClosest (String s){
+		for (int i = Integer.parseInt(s); i > 1; i--){
+			if (isPalindrome(i)){
+				if (isPrime(i)){
+					return i;
 				}
 			}
 		}
+		return -1;
+	}
+
+	public static void main(String param){
+		PrimePalindrome game = new PrimePalindrome();
+		int a = game.getClosest(param);
+		if ( a >= 0 )
+			System.out.println(a);
+		else
+			System.out.println("Prime palindrome not found");
 	}
 }
